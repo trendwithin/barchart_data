@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Michael Becco"]
   spec.email         = ["e4e6d4d5@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{Scrape Data From BarCharts.com and persist in database}
+  spec.description   = %q{Gem Purpose to extract data for all-time-highs, new-highs, new-lows and store for queries}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
