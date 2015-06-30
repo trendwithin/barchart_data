@@ -28,9 +28,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency 'mechanize', '~> 2.7.3'
-  spec.add_development_dependency 'nokogiri', '~> 1.6.6.2'
   spec.add_development_dependency 'fakeweb', '~> 1.3.0'
   spec.add_development_dependency 'sqlite3', '~> 1.3.10'
   spec.add_dependency             'activerecord', '~> 4.2.2'
+  spec.add_dependency 'mechanize', '~> 2.7.3'
+  spec.add_dependency 'nokogiri', '~> 1.6.6.2'
 end
