@@ -9,7 +9,8 @@ module BarchartData
       source_root File.expand_path('..', __FILE__)
 
       def copy_schema
-        copy_file '/test/support/schema.rb', 'db/migrate/schema.rb'
+        # copy_file '/test/support/schema.rb', 'db/migrate/schema.rb'
+        template "schema.rb", "db/migrate/schema.rb"
       end
     end
   end
