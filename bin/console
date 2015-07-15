@@ -1,7 +1,13 @@
-#!/usr/bin/env ruby
+!/usr/bin/env ruby
 
 require "bundler/setup"
 require "barchart_data"
+
+require_relative '../lib/barchart_data/alltimehigh'
+ath = BarchartData::AllTimeHigh.new
+page = ath.parse_url
+symbols = ath.strip_symbols(page)
+puts symbols
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
