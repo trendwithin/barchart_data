@@ -18,7 +18,7 @@ module BarchartData
     def strip_symbols(page)
       symbols = page[6].to_s
       strip_symbols = symbols.scan(/[A-Z]+,[^a-z]+[A-Z]/)
-      tickers = strip_symbols[0].spli(',')
+      tickers = strip_symbols[0].split(',')
     end
 
     def insert_symbols(symbols)
