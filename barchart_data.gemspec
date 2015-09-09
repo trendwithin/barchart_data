@@ -8,10 +8,11 @@ Gem::Specification.new do |spec|
   spec.version       = BarchartData::VERSION
   spec.authors       = ["Michael Becco"]
   spec.email         = ["e4e6d4d5@gmail.com"]
-
+  spec.licenses      = ['MIT']
   spec.summary       = %q{Scrape Data From BarCharts.com and persist in database}
-  spec.description   = %q{Gem Purpose to extract data for all-time-highs, new-highs, new-lows and store for queries}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.description   = %q{Extract data for all-time-highs, new-highs, new-lows and store.  Generator for schema
+                          and Ruby scripts for integration with Rails. }
+  spec.homepage      = "https://github.com/trendwithin/barchart_data"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
