@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = BarchartData::VERSION
   spec.authors       = ["Michael Becco"]
   spec.email         = ["e4e6d4d5@gmail.com"]
-
+  spec.licenses      = ['MIT']
   spec.summary       = %q{Scrape Data From BarCharts.com and persist in database}
   spec.description   = %q{Extract data for all-time-highs, new-highs, new-lows and store.  Generator for schema
                           and Ruby scripts for integration with Rails. }
