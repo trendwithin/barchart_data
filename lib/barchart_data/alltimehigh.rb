@@ -23,7 +23,7 @@ module BarchartData
 
     def insert_symbols(symbols)
       symbols.each do |s|
-        AllTimeHigh.new(symbol: s, saved_on: Time.now.to_date.to_s)
+        :AllTimeHigh.create(symbol: s, saved_on: Time.now.to_date.to_s)
       end
     end
   end
