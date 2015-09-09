@@ -1,6 +1,6 @@
 # BarchartData
 
-Barchart_Date: Screen Scrape Utility to grab and persist stock releated data.
+BarchartData: Screen Scrape Utility to grab and persist stock releated data.
 
 Current version (0.1.0) extracts All Time Highs.  This project is still in its infancy and will be heavily modified over time.
 
