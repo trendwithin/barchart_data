@@ -11,7 +11,9 @@ module BarchartData
       def copy_schema
         time = Time.now.strftime("%Y%m%d%H%M%S")
         template "schema.rb", "db/migrate/#{time}_create_all_time_highs.rb"
+        template 'newhigh_migration.rb', "db/migrate/#{time}_create_new_highs.rb"
         copy_file "../../../../barchart_data/alltimehigh.rb", 'lib/barchart_data/alltimehigh.rb'
+        copy_file "../../../../barchart_data/newhigh.rb", 'lib/barchart_data/newhigh.rb'
         copy_file "../../../../../bin/barchart_data", 'bin/barchart'
       end
     end
