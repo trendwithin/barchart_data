@@ -9,7 +9,8 @@ module BarchartData
     def initialize
       @urls = {
         all_time_high: 'http://www.barchart.com/stocks/athigh.php?_dtp1-0',
-        new_high: 'http://www.barchart.com/stocks/high.php'
+        new_high: 'http://www.barchart.com/stocks/high.php?_dtp1-0',
+        new_low: 'http://www.barchart.com/stocks/low.php?_dtp1=0'
       }
       @agent = Mechanize.new
     end
