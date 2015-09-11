@@ -1,7 +1,9 @@
 require './test/minitest_helper'
+require './test/helper/test_helper'
 require 'fakeweb'
 
 class TestScraper < Minitest::Test
+  include TestHelper
   def setup
     @scraper = ::BarchartData::Scraper.new
     @stream = {
@@ -27,16 +29,12 @@ class TestScraper < Minitest::Test
   end
 
   def test_fakeweb_using_local_files_returns_nodeset
-    FakeWeb.register_uri(:get, @scraper.urls[:all_time_high], :body => @stream[:ath], :content_type => 'text/html')
-    noko_node = @scraper.agent.get(@scraper.urls[:all_time_high]).search("input")
+    noko_node = fakeweb @scraper, @stream
     assert_instance_of Nokogiri::XML::NodeSet, noko_node
   end
 
   def test_symbols_in_nodeset_return_expected_all_time_highs
-    FakeWeb.register_uri(:get, @scraper.urls[:all_time_high], :body => @stream[:ath], :content_type => 'text/html')
-    noko_node = @scraper.agent.get(@scraper.urls[:all_time_high]).search("input")[6].to_s
-    strip_tickers = noko_node.scan(/[A-Z]+,[^a-z]+[A-Z]/)
-    symbols = strip_tickers[0].split(',')
+    symbols = fakeweb_to_symbols @scraper, @stream, :all_time_high, :ath
     assert_instance_of Array, symbols
     expected = ['AAT', 'LOPE', 'ZMH']
     expected.each do |e|
@@ -45,10 +43,7 @@ class TestScraper < Minitest::Test
   end
 
   def test_symbols_in_nodeset_return_expected_new_highs
-    FakeWeb.register_uri(:get, @scraper.urls[:new_high], :body => @stream[:nh], :content_type => 'text/html')
-    noko_node = @scraper.agent.get(@scraper.urls[:new_high]).search("input")[6].to_s
-    strip_tickers = noko_node.scan(/[A-Z]+,[^a-z]+[A-Z]/)
-    symbols = strip_tickers[0].split(',')
+    symbols = fakeweb_to_symbols @scraper, @stream, :new_high, :nh
     assert_instance_of Array, symbols
     expected = ['AAN', 'POST', 'VRTU']
     expected.each do |e|
@@ -74,20 +69,13 @@ class TestScraper < Minitest::Test
     @scraper.urls.each do |sym, url|
       case sym
       when :all_time_high
-        FakeWeb.register_uri(:get, "#{url}", :body => @stream[:ath], :content_type => 'text/html')
-        noko_node = @scraper.agent.get("#{url}").search("input")[6].to_s
-        strip_tickers = noko_node.scan(/[A-Z]+,[^a-z]+[A-Z]/)
-        symbols = strip_tickers[0].split(',')
-
+        symbols = fakeweb_to_symbols @scraper, @stream, :all_time_high, :ath
         symbols.each do |s|
           AllTimeHigh.create(symbol: s, saved_on: Time.now.to_date.to_s)
         end
         assert AllTimeHigh.find_by(symbol: 'LOPE'), !nil
       when :new_high
-        FakeWeb.register_uri(:get, "#{url}", :body => @stream[:nh], :content_type => 'text/html')
-        noko_node = @scraper.agent.get("#{url}").search("input")[6].to_s
-        strip_tickers = noko_node.scan(/[A-Z]+,[^a-z]+[A-Z]/)
-        symbols = strip_tickers[0].split(',')
+        symbols = fakeweb_to_symbols @scraper, @stream, :new_high, :nh
 
         symbols.each do |s|
           NewHigh.create(symbol: s, saved_on: Time.now.to_date.to_s)
