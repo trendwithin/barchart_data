@@ -17,7 +17,7 @@ class TestScraper < Minitest::Test
     assert_instance_of BarchartData::Scraper, @scraper
   end
 
-  def test_url_stream
+  def test_url_stream_for_key_value_pairs
     assert_equal 3, @scraper.urls.size
     assert true, @scraper.urls.has_key?(:all_time_high)
     assert true, @scraper.urls.has_key?(:new_high)
@@ -104,7 +104,7 @@ class TestScraper < Minitest::Test
         symbols.each do |s|
           NewLow.create(symbol: s, saved_on: Time.now.to_date.to_s)
         end
-        assert  NewLow.find_by(symbol: 'MRVL'), !nil
+        assert NewLow.find_by(symbol: 'MRVL'), !nil
       end
     end
   end
