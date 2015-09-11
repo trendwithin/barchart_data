@@ -8,8 +8,9 @@ class TestScraper < Minitest::Test
     @scraper = ::BarchartData::Scraper.new
     @stream = {
       ath: './test/test_files/athigh.php',
-      nh: './test/test_files/newhigh',
-      nl: './test/test_files/newlow'
+      nh:  './test/test_files/newhigh',
+      nl:  './test/test_files/newlow',
+      atl: './test/test_files/alltimelow'
     }
   end
 
@@ -18,13 +19,15 @@ class TestScraper < Minitest::Test
   end
 
   def test_url_stream_for_key_value_pairs
-    assert_equal 3, @scraper.urls.size
+    assert_equal 4, @scraper.urls.size
     assert true, @scraper.urls.has_key?(:all_time_high)
     assert true, @scraper.urls.has_key?(:new_high)
     assert true, @scraper.urls.has_key?(:new_low)
+    assert true, @scraper.urls.has_key?(:all_time_low)
     assert true, @scraper.urls.has_value?('http://www.barchart.com/stocks/athigh.php?_dtp1-0')
     assert true, @scraper.urls.has_value?('http://www.barchart.com/stocks/high.php?_dtp1-0')
     assert true, @scraper.urls.has_value?('http://www.barchart.com/stocks/low.php?_dtp1=0')
+    assert true, @scraper.urls.has_value?('http://www.barchart.com/stocks/atlow.php?_dtp1-0')
   end
 
   def test_get_smart
@@ -64,6 +67,16 @@ class TestScraper < Minitest::Test
     end
   end
 
+  def test_symbols_in_nodeset_return_expected_all_time_lows
+    symbols = fakeweb_to_symbols @scraper, @stream, :all_time_low, :atl
+    assert_instance_of Array, symbols
+    assert_equal 30, symbols.size
+    expected = ['ABY', 'GNK', 'WPG']
+    expected.each do |e|
+      assert_includes symbols, e
+    end
+  end
+
   def test_each_key_value_in_urls_returns_expected_stream_by_returning_a_symbol
     @scraper.urls.each do |sym, url|
       case sym
@@ -78,6 +91,10 @@ class TestScraper < Minitest::Test
       when :new_low
         assert true, FakeWeb.register_uri(:get, @scraper.urls[sym], :body => @stream[:nl], :content_type => 'text/html')
         assert true, @scraper.agent.get(@scraper.urls[sym]).search("input")[6].to_s.include?('ZUMZ')
+
+      when :all_time_low
+        assert true, FakeWeb.register_uri(:get, @scraper.urls[sym], :body => @stream[:atl], :content_type => 'text/html')
+        assert true, @scraper.agent.get(@scraper.urls[sym]).search("input")[6].to_s.include?('FRPT')
       end
     end
   end
@@ -105,6 +122,13 @@ class TestScraper < Minitest::Test
           NewLow.create(symbol: s, saved_on: Time.now.to_date.to_s)
         end
         assert NewLow.find_by(symbol: 'MRVL'), !nil
+      when :all_time_low
+        symbols = fakeweb_to_symbols @scraper, @stream, :all_time_low, :atl
+
+        symbols.each do |s|
+          AllTimeLow.create(symbol: s, saved_on: Time.now.to_date.to_s)
+        end
+        assert AllTimeLow.find_by(symbol: 'CDE'), !nil
       end
     end
   end
