@@ -34,32 +34,23 @@ class TestHighLow < Minitest::Test
 
   def test_striping_of_values_from_links_array
     links = fakeweb_high_low_links @scraper, @stream
-    strip_links = []
-    regex_the_links = []
-    overall_high_low = []
-
-    links.each do |a|
-      strip_links.push(a.to_s)
-    end
-
-    strip_links.slice!(0..3)
-    strip_links.shift(6)
-    strip_links.each { |e| regex_the_links.push(e.match(/>\d+</).to_s) }
-     regex_the_links.map! do |e|
-      if e.blank?
-        e = ">0<"
-      else
-        e = e
-      end
-    end
-
-    regex_the_links.map! { |e| e.gsub(/[><]/,"") }
-    extracted_values = regex_the_links.each_slice(10).to_a
-    extracted_values.each do |value|
-      overall_high_low << value.first.to_i
-    end
-
+    overall_high_low = regex_to_stip_high_low_data_from links
     expected = [212, 304, 74, 238, 54, 214, 37, 168, 44, 195]
     assert_equal expected.sort, overall_high_low.sort
+  end
+
+  def test_data_insertion_of_symbols
+    links = fakeweb_high_low_links @scraper, @stream
+    high_low = regex_to_stip_high_low_data_from links
+    HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
+                   three_month_high: high_low[2], three_month_low: high_low[3],
+                   six_month_high: high_low[4], six_month_low: high_low[5],
+                   twelve_month_high: high_low[6], twelve_month_low: high_low[7],
+                   ytd_high: high_low[8], ytd_low: high_low[8],
+                   saved_on: Time.now.strftime("%m/%d/%Y"))
+
+    results = AllTimeLow.find_by(saved_on: Time.now.strftime("%m/%d/%Y"))
+    expected = [212, 304, 74, 238, 54, 214, 37, 168, 44, 195]
+    assert_equal expected.sort, high_low.sort
   end
 end
