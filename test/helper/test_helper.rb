@@ -22,4 +22,32 @@ module TestHelper
     page = scraper.agent.get(scraper.url[:high_low]).search("div[id='divContent']")
     links = page.css("td[align='right']").to_a
   end
+
+  def regex_to_stip_high_low_data_from links
+    strip_links = []
+    regex_the_links = []
+    overall_high_low = []
+
+    links.each do |a|
+      strip_links.push(a.to_s)
+    end
+
+    strip_links.slice!(0..3)
+    strip_links.shift(6)
+    strip_links.each { |e| regex_the_links.push(e.match(/>\d+</).to_s) }
+    regex_the_links.map! do |e|
+      if e.blank?
+        e = ">0<"
+      else
+        e = e
+      end
+    end
+
+    regex_the_links.map! { |e| e.gsub(/[><]/,"") }
+    extracted_values = regex_the_links.each_slice(10).to_a
+    extracted_values.each do |value|
+      overall_high_low << value.first.to_i
+    end
+  overall_high_low
+  end
 end
