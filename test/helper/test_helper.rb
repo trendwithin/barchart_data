@@ -11,4 +11,15 @@ module TestHelper
     strip_tickers = noko_node.scan(/[A-Z]+,[^a-z]+[A-Z]/)
     symbols = strip_tickers[0].split(',')
   end
+
+  def fakeweb_high_low scraper, stream
+    FakeWeb.register_uri(:get, scraper.url[:high_low], :body => stream[:hl], :content_type => 'text/html')
+    scraper.agent.get(scraper.url[:high_low]).search("div[id='divContent']")
+  end
+
+  def fakeweb_high_low_links scraper, stream
+    FakeWeb.register_uri(:get, scraper.url[:high_low], :body => stream[:hl], :content_type => 'text/html')
+    page = scraper.agent.get(scraper.url[:high_low]).search("div[id='divContent']")
+    links = page.css("td[align='right']").to_a
+  end
 end
