@@ -11,12 +11,12 @@ module BarchartData
       @agent = Mechanize.new
     end
 
-    def data_extraction scraper
-      page = scraper.agent.get(scraper.url[:high_low]).search("div[id='divContent']")
+    def data_extraction
+      page = @agent.get(@url[:high_low]).search("div[id='divContent']")
       page.css("td[align='right']").to_a
     end
 
-    def strip_highs_and_lows links
+    def strip_highs_and_lows_from links
       strip_links = []
       regex_the_links = []
       overall_high_low = []
