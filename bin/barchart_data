@@ -2,13 +2,6 @@
 
 require "bundler/setup"
 require "barchart_data"
-
-# require_relative '../lib/barchart_data/alltimehigh'
-# ath = BarchartData::AllTimeHigh.new
-# page = ath.parse_url
-# symbols = ath.strip_symbols(page)
-# puts symbols
-
 require_relative '../lib/barchart_data/scraper'
 require_relative '../lib/barchart_data/high_low_scraper'
 
@@ -17,3 +10,6 @@ scraper.data_extraction
 
 
 hl_scraper = BarchartData::HighLowScraper.new
+links = hl_scraper.data_extraction
+values = hl_scraper.strip_highs_and_lows_from links
+hl_scraper.insert_data values
