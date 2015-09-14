@@ -25,6 +25,14 @@ module BarchartData
         template 'highlow_migration.rb', "db/migrate/#{time}_create_high_lows.rb"
       end
 
+      def copy_models
+        template 'models/all_time_high.rb', 'app/models/all_time_high.rb'
+        template 'models/all_time_low.rb', 'app/models/all_time_low.rb'
+        template 'models/new_high.rb', 'app/models/new_high.rb'
+        template 'models/new_low.rb', 'app/models/new_low.rb'
+        template 'models/high_low.rb', 'app/models/high_low.rb'
+      end
+
       def copy_classes
         copy_file "../../../../barchart_data/scraper.rb", 'lib/barchart_data/scraper.rb'
         copy_file "../../../../barchart_data/high_low_scraper.rb", 'lib/barchart_data/high_low_scraper.rb'
