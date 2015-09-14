@@ -11,9 +11,13 @@ module BarchartData
       def copy_migrations
         time = Time.now.strftime("%Y%m%d%H%M%S")
         template "alltimehigh_migration.rb", "db/migrate/#{time}_create_all_time_highs.rb"
+        sleep 2
         template 'newhigh_migration.rb', "db/migrate/#{time}_create_new_highs.rb"
+        sleep 1
         template 'newlow_migration.rb', "db/migrate/#{time}_create_new_lows.rb"
+        sleep 2
         template 'alltimelow_migration.rb', "db/migrate/#{time}_create_all_time_lows.rb"
+        sleep 1
         template 'highlow_migration.rb', "db/migrate/#{time}_create_high_lows.rb"
       end
 
