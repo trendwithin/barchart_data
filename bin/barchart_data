@@ -10,5 +10,10 @@ require "barchart_data"
 # puts symbols
 
 require_relative '../lib/barchart_data/scraper'
+require_relative '../lib/barchart_data/high_low_scraper'
+
 scraper = BarchartData::Scraper.new
 scraper.data_extraction
+
+
+hl_scraper = BarchartData::HighLowScraper.new
