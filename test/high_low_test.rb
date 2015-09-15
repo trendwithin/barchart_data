@@ -49,7 +49,7 @@ class TestHighLow < Minitest::Test
                    ytd_high: high_low[8], ytd_low: high_low[8],
                    saved_on: Time.now.strftime("%m/%d/%Y"))
 
-    results = AllTimeLow.find_by(saved_on: Time.now.strftime("%m/%d/%Y"))
+    results = HighLow.find_by(saved_on: Time.now.strftime("%m/%d/%Y"))
     expected = [212, 304, 74, 238, 54, 214, 37, 168, 44, 195]
     assert_equal expected.sort, high_low.sort
   end

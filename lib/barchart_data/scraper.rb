@@ -34,19 +34,19 @@ module BarchartData
       case sym
       when :all_time_high
         symbols.each do |s|
-          :AllTimeHigh.create(symbol: s, saved_on: Time.now.strftime("%m/%d/%Y"))
+          ::AllTimeHigh.create(symbol: s, saved_on: Time.current)
         end
       when :new_high
         symbols.each do |s|
-          :NewHigh.create(symbol: s, saved_on: Time.now.strftime("%m/%d/%Y"))
+          ::NewHigh.create(symbol: s, saved_on: Time.current)
         end
       when :new_low
         symbols.each do |s|
-          :NewLow.create(symbol: s, saved_on: Time.now.strftime("%m/%d/%Y"))
+          ::NewLow.create(symbol: s, saved_on: Time.current)
         end
       when :all_time_low
         symbols.each do |s|
-          :AllTimeLow.create(symbol: s, saved_on: Time.now.strftime("%m/%d/%Y"))
+          ::AllTimeLow.create(symbol: s, saved_on: Time.current)
         end
       end
     end

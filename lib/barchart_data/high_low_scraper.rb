@@ -11,12 +11,12 @@ module BarchartData
       @agent = Mechanize.new
     end
 
-    def data_extraction scraper
-      page = scraper.agent.get(scraper.url[:high_low]).search("div[id='divContent']")
+    def data_extraction
+      page = @agent.get(@url[:high_low]).search("div[id='divContent']")
       page.css("td[align='right']").to_a
     end
 
-    def strip_highs_and_lows links
+    def strip_highs_and_lows_from links
       strip_links = []
       regex_the_links = []
       overall_high_low = []
@@ -45,12 +45,12 @@ module BarchartData
     end
 
     def insert_data high_low
-      HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
+      ::HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
                      three_month_high: high_low[2], three_month_low: high_low[3],
                      six_month_high: high_low[4], six_month_low: high_low[5],
                      twelve_month_high: high_low[6], twelve_month_low: high_low[7],
                      ytd_high: high_low[8], ytd_low: high_low[8],
-                     saved_on: Time.now.strftime("%m/%d/%Y"))
+                     saved_on: Time.current )
     end
   end
 end
