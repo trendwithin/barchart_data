@@ -44,7 +44,7 @@ module BarchartData
         symbols.each do |s|
           ::NewLow.create(symbol: s, saved_on: Time.current)
         end
-      when ::all_time_low
+      when :all_time_low
         symbols.each do |s|
           ::AllTimeLow.create(symbol: s, saved_on: Time.current)
         end
