@@ -45,12 +45,12 @@ module BarchartData
     end
 
     def insert_data high_low
-      HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
+      ::HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
                      three_month_high: high_low[2], three_month_low: high_low[3],
                      six_month_high: high_low[4], six_month_low: high_low[5],
                      twelve_month_high: high_low[6], twelve_month_low: high_low[7],
                      ytd_high: high_low[8], ytd_low: high_low[8],
-                     saved_on: Time.now.strftime("%m/%d/%Y"))
+                     saved_on: Time.current )
     end
   end
 end
