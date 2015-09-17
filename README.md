@@ -1,8 +1,14 @@
 # BarchartData
 
-BarchartData: Screen Scrape Utility to grab and persist stock releated data.
+**BarchartData:** Screen Scrape Utility to grab and persist stock releated data from the site Barcharts.com  Current implemenation extracts:
 
-Current version (0.1.0) extracts All Time Highs.  This project is still in its infancy and will be heavily modified over time.
+*  All-Time-Highs
+*  52-Week Highs
+*  All-Time-Lows
+*  52-Week Lows
+*  New Highs, New Lows
+
+Version (0.1.1) This project is still in its infancy and will be heavily modified over time.
 
 ## Installation
 
@@ -30,25 +36,23 @@ Or install it yourself as:
 
 ***Best Run Time:***  7PM PST (2AM GMT) as data stabalizes.
 
-***Be Kind***  Test against the file test/test_files/athigh.php and limit hits against site.
+***Be Kind***  Test against the files in test/test_files/ and limit live test hits against site.
 
-## Prevent Duplicate Records
-There should only be one record per symbol per date.
+## Models
+To prevent duplication of data, the gem installs 4 models with validations.  Ex:
 
 
 **AllTimeHigh**
 
     class AllTimeHigh < ActiveRecord::Base
+      validates :symbol, :saved_on, presence: true
       validates :symbol, uniqueness: { scope: :saved_on }
     end
 
 
 ## Future Features:
-*  52-Week High
-*  All-Time-Low
-*  52-Week Low
-*  Current New Highs/Lows
-*  Error Handling
+*  Improve Error Handling
+*  Add Scraper for Earnings Related Data
 
 
 ## Development

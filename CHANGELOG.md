@@ -2,7 +2,7 @@
 
 Initial release.  Screen scrape All Time Highs.
 
-***Version 0.2.0***
+***Version 0.1.1***
 
 Bug Fix: Stray puts line that broke database insertion.
 
