@@ -1,3 +1,14 @@
+### ALERT ###
+
+Recently it has come to my attention that this gem is broken as there has been a major over haul to Barchart.
+
+Links in the following format are now invalid: http://www.barchart.com/stocks/athigh.php?_dtp1-0
+
+Links in the following format are currently active http://old.barchart.com/stocks/athigh.php?_dtp1-0
+
+I'm currently working on cleaning up this gem's codebase for an update with the new urls.
+
+
 # BarchartData
 
 **BarchartData:** Screen Scrape Utility to grab and persist stock releated data from the site Barcharts.com  Current implemenation extracts:
