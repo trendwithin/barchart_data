@@ -71,5 +71,46 @@ module BarchartData
       validated = @snhnl.validate_data_integrity array
       assert_equal false, validated
     end
+
+    def test_convert_fields_to_symbols
+      array = ["1-Month", 25]
+      expected = [:one_month_low, 25]
+      assert_equal expected, @snhnl.convert_field_names_to_symbols(array, "low")
+    end
+
+    def test_merge_highs_and_lows
+      highs = [:one_month_high, 25]
+      lows = [:one_month_low, 10]
+      expected = [:one_month_high, 25, :one_month_low, 10]
+      assert_equal expected, @snhnl.merge_high_low(highs, lows)
+    end
+
+    def test_hash_data_before_insertion
+      array = [:one_month_high, 25, :one_month_low, 10]
+      expected = { :one_month_high => 25, :one_month_low => 10 }
+      assert_equal expected, @snhnl.hash_data_before_insertion(array)
+    end
+
+    def test_saved_on_date
+      hash = { :one_month_high => 25, :one_month_low => 10 }
+      current_time = Time.now
+      insert_date = @snhnl.add_datestamp hash
+      assert_equal current_time.month, insert_date.month
+      assert_equal current_time.day, insert_date.day
+      assert_equal current_time.year, insert_date.year
+    end
+
+    def test_complete_conversion_sequence
+      highs = @snhnl.extract_table_data_with_class_even @page
+      lows = @snhnl.extract_table_data_with_class_odd @page
+      high_values = @snhnl.extract_values highs
+      low_values = @snhnl.extract_values lows
+      high_fields = @snhnl.convert_stringy_numbers_to_int high_values
+      low_fields = @snhnl.convert_stringy_numbers_to_int low_values
+      highs_integrity = @snhnl.validate_data_integrity high_fields
+      lows_integrity = @snhnl.validate_data_integrity low_fields
+      convert_highs = @snhnl.convert_field_names_to_symbols(highs_integrity, "high")
+      convert_lows = @snhnl.convert_field_names_to_symbols(lows_integrity, "low")
+    end
   end
 end
