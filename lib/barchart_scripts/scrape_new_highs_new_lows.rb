@@ -1,3 +1,4 @@
+require 'active_record'
 module BarchartData
   class ScrapeNewHighsNewLows
     def extract_table_data_with_class_even page
@@ -13,8 +14,8 @@ module BarchartData
     def extract_values array
       temp = []
       array.each do |elem|
-        elem.each_with_index do |elem, index|
-          temp << elem if index == 0 || index == 2
+        elem.each_with_index do |e, i|
+          temp << e if i == 0 || i == 2
         end
       end
       remove_extraneous_elements temp
@@ -50,16 +51,11 @@ module BarchartData
     end
 
     def add_datestamp hash
-      hash[:saved_on] = Time.now
+      hash[:saved_on] = Time.now.strftime("%Y-%m-%d")
     end
 
     def insert_data high_low
-      ::HighLow.create(one_month_high: high_low[0], one_month_low: high_low[1],
-      three_month_high: high_low[2], three_month_low: high_low[3],
-      six_month_high: high_low[4], six_month_low: high_low[5],
-      twelve_month_high: high_low[6], twelve_month_low: high_low[7],
-      ytd_high: high_low[8], ytd_low: high_low[8],
-      saved_on: Time.current )
+      HighLow.create(high_low)
     end
 
     private
