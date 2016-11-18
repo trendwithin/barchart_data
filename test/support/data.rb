@@ -1,5 +1,5 @@
 # AllTimeHigh.create(symbol: 'ABC', saved_on: Time.now.to_date.to_s)
-# NewHigh.create(symbol: 'XYX', saved_on: Time.now.to_date.to_s)
+NewHigh.create(symbol: 'XYX', saved_on: Time.now.to_date.to_s)
 # NewLow.create(symbol: 'CDE', saved_on: Time.now.to_date.to_s)
 # AllTimeLow.create(symbol: 'LMNO', saved_on: Time.now.to_date.to_s)
 # HighLow.create(one_month_high: 50, one_month_low: 40,
