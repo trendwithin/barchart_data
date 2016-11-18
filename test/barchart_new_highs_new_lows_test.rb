@@ -93,11 +93,23 @@ module BarchartData
 
     def test_saved_on_date
       hash = { :one_month_high => 25, :one_month_low => 10 }
-      current_time = Time.now
+      current_time = Time.now.strftime("%Y-%m-%d")
       insert_date = @snhnl.add_datestamp hash
-      assert_equal current_time.month, insert_date.month
-      assert_equal current_time.day, insert_date.day
-      assert_equal current_time.year, insert_date.year
+      assert_equal current_time, insert_date
+    end
+
+    def test_insertion
+      data = { :one_month_high=>706, :three_month_high=>412, :six_month_high=>309,
+               :twelve_month_high=>219, :ytd_high=>108, :all_time_high=>65,
+               :one_month_low=>139, :three_month_low=>103, :six_month_low=>56,
+               :twelve_month_low=>31, :ytd_low=>33, :all_time_low=>5 }
+
+      count = HighLow.count
+      @snhnl.add_datestamp data
+      @snhnl.insert_data data
+      assert_equal count + 1, HighLow.count
+      result = HighLow.find_by(one_month_high: 706)
+      assert_equal data[:three_month_high], result[:three_month_high]
     end
 
     def test_complete_conversion_sequence
@@ -111,6 +123,9 @@ module BarchartData
       lows_integrity = @snhnl.validate_data_integrity low_fields
       convert_highs = @snhnl.convert_field_names_to_symbols(highs_integrity, "high")
       convert_lows = @snhnl.convert_field_names_to_symbols(lows_integrity, "low")
+      merged = @snhnl.merge_high_low(convert_highs, convert_lows)
+      to_hash = @snhnl.hash_data_before_insertion(merged)
+      @snhnl.add_datestamp(to_hash)
     end
   end
 end
