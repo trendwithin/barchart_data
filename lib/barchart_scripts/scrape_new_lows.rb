@@ -5,6 +5,7 @@ module BarchartData
       array = page.search('.ds_symbol').map { |e| e.text() }
       array.map! { |elem| elem.split }
     end
+
     def validate_data_integrity dirty_array
       dirty_array.reduce([]) { |cleaned_array, i|
         cleaned_array << i if i.to_s == i.to_s.upcase
