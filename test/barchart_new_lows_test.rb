@@ -1,3 +1,4 @@
+require './test/minitest_helper'
 module BarchartData
   class ScrapeNewLowsTest < Minitest::Test
     def setup
