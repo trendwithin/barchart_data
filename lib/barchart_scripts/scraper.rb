@@ -14,10 +14,22 @@ module BarchartData
     end
 
     def insert_data arr, sym
-    case sym
+      case sym
       when :AllTimeHigh
         arr.each do |s|
           AllTimeHigh.create(symbol: s, saved_on: Time.current)
+        end
+      when :AllTimeLow
+        arr.each do |s|
+          AllTimeLow.create(symbol: s, saved_on: Time.current)
+        end
+      when :NewHigh
+        arr.each do |s|
+          NewHigh.create(symbol: s, saved_on: Time.current)
+        end
+      when :NewLow
+        arr.each do |s|
+          NewLow.create(symbol: s, saved_on: Time.current)
         end
       end
     end
