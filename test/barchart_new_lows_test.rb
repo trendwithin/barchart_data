@@ -7,7 +7,7 @@ module BarchartData
         @mechanize = BarchartData::BarchartConnection.new
         @page = @mechanize.fetch_page(url)
       end
-      @snl = BarchartData::ScrapeNewLows.new
+      @snl = BarchartData::Scraper.new
     end
 
     def test_200_status_code
@@ -30,6 +30,12 @@ module BarchartData
       dirty = ['Sym', 'BOL', 'Che', 'CK']
       cleaned_array = @snl.validate_data_integrity dirty
       assert_equal 2, cleaned_array.count
+    end
+
+    def test_data_insertion
+      data = ["NL"]
+      @snl.insert_data(data, :NewLow)
+      assert_equal data[0], NewLow.last.symbol
     end
   end
 end
