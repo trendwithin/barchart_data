@@ -7,14 +7,7 @@ require 'byebug'
 
 require 'barchart_scripts/barchart_connection'
 require 'barchart_scripts/scrape_new_highs_new_lows'
-# require 'barchart_scripts/scrape_new_highs'
-# require 'barchart_scripts/scrape_new_lows'
-# require 'barchart_scripts/scrape_all_time_highs'
 require 'barchart_scripts/scraper'
-# require 'barchart_data'
-# require 'barchart_data/alltimehigh'
-# require 'barchart_data/newhigh'
-# require 'barchart_data/scraper'
 
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3",
                                        :database => File.dirname(__FILE__) + "/barchart.sqlite3")

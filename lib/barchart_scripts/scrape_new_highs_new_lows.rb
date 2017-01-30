@@ -3,12 +3,20 @@ module BarchartData
   class ScrapeNewHighsNewLows
     def extract_table_data_with_class_even page
       array = page.search('.even').map { |e| e.text() }
+      array = prune_array_data array
       array.map! { |elem| elem.split }
     end
 
     def extract_table_data_with_class_odd page
       array = page.search('.odd').map { |e| e.text() }
+      array = prune_array_data array
       array.map! { |elem| elem.split }
+    end
+
+    def prune_array_data arr
+      ten = arr[10]
+      arr.slice!(5..15)
+      arr << ten
     end
 
     def extract_values array
@@ -18,7 +26,8 @@ module BarchartData
           temp << e if i == 0 || i == 2
         end
       end
-      remove_extraneous_elements temp
+      temp
+      # remove_extraneous_elements temp
     end
 
     def convert_stringy_numbers_to_int array
