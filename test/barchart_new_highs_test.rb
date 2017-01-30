@@ -18,13 +18,13 @@ module BarchartData
     def test_extraction_of_new_high_symbols
       array_of_symbols = @snh.extract_symbols_from_page @page
       assert_instance_of Array, array_of_symbols
-      assert_equal 130, array_of_symbols.count
+      assert_equal 62, array_of_symbols.count
     end
 
     def test_validation_of_symbols
       dirty_array_of_symbols = @snh.extract_symbols_from_page @page
       cleaned_array = @snh.validate_data_integrity dirty_array_of_symbols
-      assert_equal 129, cleaned_array.count
+      assert_equal 61, cleaned_array.count
     end
 
     def test_validations_of_symbols_known_data

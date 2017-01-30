@@ -18,33 +18,31 @@ module BarchartData
     def test_extract_td_attribute_with_even_class_from_page
       expectation = @snhnl.extract_table_data_with_class_even @page
       assert_instance_of Array, expectation
-      assert_equal 11, expectation.size
+      assert_equal 6, expectation.size
     end
 
     def test_extract_td_attribute_with_odd_class_from_page
       expectation = @snhnl.extract_table_data_with_class_odd @page
       assert_instance_of Array, expectation
-      assert_equal 11, expectation.size
+      assert_equal 6, expectation.size
     end
 
-    def test_extract_new_highs
+    def test_extract_new_highs_fields_included
       fields = %w{ 1-Month 3-Month 6-Month 52-Week YTD All-Time }
       evens = @snhnl.extract_table_data_with_class_even @page
       temp = @snhnl.extract_values evens
       fields.each do |elem|
         assert_equal true, temp.include?(elem)
       end
-      assert_equal 12, temp.size
     end
 
-    def test_extract_new_lows
+    def test_extract_new_lows_fields_included
       fields = %w{ 1-Month 3-Month 6-Month 52-Week YTD All-Time }
       odds = @snhnl.extract_table_data_with_class_odd @page
       temp = @snhnl.extract_values odds
       fields.each do |elem|
         assert_equal true, temp.include?(elem)
       end
-      assert_equal 12, temp.size
     end
 
     def test_converting_string_numbers_to_int
@@ -111,7 +109,7 @@ module BarchartData
       result = HighLow.find_by(one_month_high: 706)
       assert_equal data[:three_month_high], result[:three_month_high]
     end
-
+    
     def test_complete_conversion_sequence
       highs = @snhnl.extract_table_data_with_class_even @page
       lows = @snhnl.extract_table_data_with_class_odd @page

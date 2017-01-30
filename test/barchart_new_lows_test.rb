@@ -17,13 +17,13 @@ module BarchartData
     def test_extraction_of_new_low_symbols
       array_of_symbols = @snl.extract_symbols_from_page @page
       assert_instance_of Array, array_of_symbols
-      assert_equal 46, array_of_symbols.count
+      assert_equal 54, array_of_symbols.count
     end
 
     def test_validation_of_symbols
       dirty_array_of_symbols = @snl.extract_symbols_from_page @page
       cleaned_array = @snl.validate_data_integrity dirty_array_of_symbols
-      assert_equal 45, cleaned_array.count
+      assert_equal 53, cleaned_array.count
     end
 
     def test_validations_of_symbols_known_data
