@@ -11,6 +11,8 @@ class CreateHighLows < ActiveRecord::Migration
     t.integer     :twelve_month_low
     t.integer     :ytd_high
     t.integer     :ytd_low
+    t.integer     :all_time_high
+    t.integer     :all_time_low
     t.datetime    :saved_on
     t.timestamps  null: false
     end
