@@ -2,14 +2,14 @@
 
 require "bundler/setup"
 require "barchart_data"
-require_relative '../lib/barchart_data/scraper'
-require_relative '../lib/barchart_data/high_low_scraper'
+require_relative '../lib/barchart_scripts/scraper'
+require_relative '../lib/barchart_scripts/scrape_new_highs_new_lows'
 
 scraper = BarchartData::Scraper.new
 scraper.data_extraction
 
 
-hl_scraper = BarchartData::HighLowScraper.new
+hl_scraper = BarchartData::ScrapeNewHighsNewLows.new
 links = hl_scraper.data_extraction
 values = hl_scraper.strip_highs_and_lows_from links
 hl_scraper.insert_data values
