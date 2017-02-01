@@ -34,7 +34,7 @@ module BarchartData
       end
 
       def copy_classes
-        copy_file "../../../../barchart_scripts/barchart_connection", "lib/barchart_scripts/barchart_connection.rb"
+        copy_file "../../../../barchart_scripts/barchart_connection.rb", "lib/barchart_scripts/barchart_connection.rb"
         copy_file "../../../../barchart_scripts/scraper.rb", 'lib/barchart_scripts/scraper.rb'
         copy_file "../../../../barchart_scripts/scrape_new_highs_new_lows.rb", 'lib/barchart_scripts/scrape_new_highs_new_lows.rb'
         copy_file "../../../../../bin/barchart_data", 'bin/barchart'
