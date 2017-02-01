@@ -8,3 +8,5 @@
 /spec/reports/
 /tmp/
 /vendor/
+.byebug_history
+test/test_files/vcr_cassettes/
