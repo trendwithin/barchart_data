@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-coverage', '~> 1.0.0.b1'
   spec.add_development_dependency 'byebug', '~> 9.0', '>= 9.0.6'
   spec.add_development_dependency 'webmock', '~> 2.0', '>= 2.0.3'
-  spec.add_dependency             'activerecord', '~> 5.0.0.1'
+  spec.add_dependency             'activerecord', '~> 5.0.1'
   spec.add_dependency             'mechanize', '~> 2.7.5'
   spec.add_dependency             'nokogiri', '~> 1.6.8.1'
 end

@@ -1,4 +1,7 @@
-### ALERT ###
+### UPDATE:
+Version(0.1.2) released. Modification to schema so will break previous version.  URLs work with old.barchart.com.  Working on updating to current site specifics.
+
+### ALERT:
 
 Recently it has come to my attention that this gem is broken as there has been a major over haul to Barchart.
 
@@ -7,6 +10,8 @@ Links in the following format are now invalid: http://www.barchart.com/stocks/at
 Links in the following format are currently active http://old.barchart.com/stocks/athigh.php?_dtp1-0
 
 I'm currently working on cleaning up this gem's codebase for an update with the new urls.
+
+Applies to version **(0.1.1)**
 
 
 # BarchartData
@@ -19,7 +24,7 @@ I'm currently working on cleaning up this gem's codebase for an update with the 
 *  52-Week Lows
 *  New Highs, New Lows
 
-Version (0.1.1) This project is still in its infancy and will be heavily modified over time.
+Version (0.1.2) This project is still in its infancy and will be heavily modified over time.
 
 ## Installation
 
