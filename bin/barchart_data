@@ -2,14 +2,37 @@
 
 require "bundler/setup"
 require "barchart_data"
+require_relative '../lib/barchart_scripts/barchart_connection'
 require_relative '../lib/barchart_scripts/scraper'
 require_relative '../lib/barchart_scripts/scrape_new_highs_new_lows'
 
+BARCHART_URLS = { AllTimeHigh: 'http://old.barchart.com/stocks/athigh.php?_dtp1=0',
+                  AllTimeLow: 'http://old.barchart.com/stocks/atlow.php?_dtp1=0',
+                  NewHigh: 'http://old.barchart.com/stocks/high.php?_dtp1=0',
+                  NewLow: 'http://old.barchart.com/stocks/low.php?_dtp1=0' }
+BARCHART_HIGH_LOWS_URL = 'https://www.barchart.com/stocks/highs-lows/summary'
+
+connection = BarchartData::BarchartConnection.new
 scraper = BarchartData::Scraper.new
-scraper.data_extraction
+high_low = BarchartData::ScrapeNewHighsNewLows.new
 
+BARCHART_URLS.each do |symbol, url|
+  page = connection.fetch_page url
+  data = scraper.extract_symbols_from_page page
+  scraper.insert_data data, symbol
+end
 
-hl_scraper = BarchartData::ScrapeNewHighsNewLows.new
-links = hl_scraper.data_extraction
-values = hl_scraper.strip_highs_and_lows_from links
-hl_scraper.insert_data values
+page = connection.fetch_page BARCHART_HIGH_LOWS_URL
+highs = high_low.extract_table_data_with_class_even page
+lows = high_low.extract_table_data_with_class_odd page
+high_values = high_low.extract_values highs
+low_values = high_low.extract_values lows
+high_fields = high_low.convert_stringy_numbers_to_int high_values
+low_fields = high_low.convert_stringy_numbers_to_int low_values
+convert_highs = high_low.convert_field_names_to_symbols(high_fields, "high")
+convert_lows = high_low.convert_field_names_to_symbols(low_fields, "low")
+merged = high_low.merge_high_low(convert_highs, convert_lows)
+to_hash = high_low.hash_data_before_insertion merged
+high_low.add_datestamp to_hash
+high_low.insert_data to_hash
+to_hash
