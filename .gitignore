@@ -10,3 +10,4 @@
 /vendor/
 .byebug_history
 test/test_files/vcr_cassettes/
+test/barchart.sqlite3
