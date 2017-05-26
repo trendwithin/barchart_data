@@ -4,8 +4,10 @@ require 'vcr'
 require 'mechanize'
 require 'active_record'
 require 'byebug'
+require 'fileutils'
 
 require 'barchart_scripts/barchart_connection'
+require 'barchart_scripts/barchart_logger'
 require 'barchart_scripts/scrape_new_highs_new_lows'
 require 'barchart_scripts/scraper'
 
